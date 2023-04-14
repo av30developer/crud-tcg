@@ -1,0 +1,107 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+        <h1>Add User</h1>
+            <form [formGroup]="employeedata" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">firstName</label>
+                    <input type="text" class="form-control" formControlName="firstName" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div *ngIf="f.firstName.invalid && f.firstName.dirty">
+                        <span *ngIf="f.firstName.errors.required" style="color: red;">Enter First Name</span>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">lastName</label>
+                    <input type="text" class="form-control" formControlName="lastName" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div *ngIf="f.lastName.invalid && f.lastName.dirty">
+                        <span *ngIf="f.lastName.errors.required" style="color: red;">Enter Last Name</span>
+                    </div>
+                  </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" formControlName="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <div *ngIf="f.email.invalid && f.email.dirty">
+                    <span *ngIf="f.email.errors.required" style="color: red;">Enter Last Name</span>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form class="wrap">
+                <div class="form-group">
+                  <h3>Filter Records</h3>
+                  <input class="form-control"  type="text" name="search" 
+                    placeholder="Filter record according to below column" [(ngModel)]="searchText" />
+                </div>
+              </form>
+              <hr/>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">S. No.</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let obj of employeeList | filter:searchText; index as i;">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{obj.firstName}}</td>
+                    <td>{{obj.lastName}}</td>
+                    <td>{{obj.email}}</td>
+                    <td><button class="btn btn-primary" style="cursor: pointer; color: hsl(240, 16%, 82%)" (click)="editData(obj)">Edit</button></td>
+                    <td><button class="btn btn-danger" style="cursor: pointer; color: #d9d9ed" (click)="deleteUser(obj.id)">Delete</button></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="col-md-2"></div>
+       
+    </div>
+   
+</div>
+
+
+<!-- Update User Data -->
+
+<div class="modal" tabindex="-1" role="dialog" id="updateUser">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update User Detaisl</h5>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="employeedata">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">firstName</label>
+                    <input type="text" class="form-control" formControlName="firstName" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">lastName</label>
+                    <input type="text" class="form-control" formControlName="lastName" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" formControlName="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="updateUserData(userId)">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
